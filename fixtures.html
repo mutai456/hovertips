@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EliteAI Football Predictions</title>
+
+<style>
+:root{
+--bg:#0b132b;
+--card:#1c2541;
+--primary:#3a86ff;
+--text:white;
+}
+.light{
+--bg:#f5f5f5;
+--card:white;
+--primary:#0066ff;
+--text:black;
+}
+body{
+margin:0;
+font-family:Arial;
+background:var(--bg);
+color:var(--text);
+}
+
+/* HAMBURGER MENU */
+.menu-icon{
+position:fixed;
+top:15px;
+left:15px;
+font-size:28px;
+cursor:pointer;
+z-index:2000;
+}
+
+.side-menu{
+position:fixed;
+top:0;
+left:-250px;
+width:200px;
+height:100%;
+background:#111;
+padding-top:60px;
+transition:0.3s;
+z-index:1500;
+}
+
+.side-menu a{
+display:block;
+padding:15px;
+color:white;
+text-decoration:none;
+font-size:18px;
+}
+
+.side-menu a:hover{
+background:var(--primary);
+}
+
+.side-menu.active{
+left:0;
+}
+
+header{
+padding:20px;
+text-align:center;
+font-size:26px;
+font-weight:bold;
+background:linear-gradient(90deg,#1c2541,#3a86ff);
+}
+
+nav{
+position:sticky;
+top:0;
+background:#111;
+display:flex;
+justify-content:center;
+gap:10px;
+padding:10px;
+z-index:1000;
+}
+
+nav button{
+padding:8px 14px;
+border:none;
+background:var(--primary);
+color:white;
+border-radius:5px;
+cursor:pointer;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:15px;
+}
+
+.section{display:none;}
+.active{display:block;}
+
+.match{
+background:var(--card);
+padding:12px;
+margin:8px 0;
+border-radius:8px;
+display:flex;
+justify-content:space-between;
+}
+
+.won{color:#00ffae;font-weight:bold;}
+
+.locked{
+background:rgba(0,0,0,0.6);
+padding:20px;
+text-align:center;
+border-radius:8px;
+}
+
+.dashboard{
+background:var(--card);
+padding:15px;
+border-radius:8px;
+margin:15px 0;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HAMBURGER ICON -->
+<div class="menu-icon" onclick="toggleMenu()">☰</div>
+
+<!-- SIDE MENU -->
+<div id="sideMenu" class="side-menu">
+
+<a href="https://wa.me/254726079470" target="_blank">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#25D366" viewBox="0 0 24 24">
+<path d="M20.52 3.48A11.83 11.83 0 0 0 12.06 0C5.48 0 .12 5.36.12 11.94c0 2.1.55 4.15 1.6 5.97L0 24l6.25-1.63a11.86 11.86 0 0 0 5.8 1.48h.01c6.58 0 11.94-5.36 11.94-11.94 0-3.19-1.24-6.19-3.48-8.43zM12.06 21.9c-1.8 0-3.57-.48-5.12-1.38l-.37-.22-3.7.96.99-3.61-.24-.38a9.93 9.93 0 0 1-1.52-5.33c0-5.48 4.46-9.94 9.94-9.94 2.65 0 5.14 1.03 7.01 2.9a9.87 9.87 0 0 1 2.9 7.01c0 5.48-4.46 9.94-9.93 9.94zm5.44-7.41c-.3-.15-1.78-.88-2.06-.98-.28-.1-.48-.15-.68.15s-.78.98-.96 1.18c-.18.2-.35.23-.65.08-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.8-1.68-2.1-.18-.3-.02-.46.13-.6.14-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.03-.53-.08-.15-.68-1.63-.93-2.23-.24-.58-.49-.5-.68-.51h-.58c-.2 0-.53.08-.8.38s-1.05 1.03-1.05 2.5 1.08 2.9 1.23 3.1c.15.2 2.12 3.23 5.13 4.53.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.78-.73 2.03-1.43.25-.7.25-1.3.18-1.43-.07-.13-.27-.2-.57-.35z"/>
+</svg>
+&nbsp; WhatsApp
+</a>
+
+<a href="https://wa.me/254726079470" target="_blank">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#25D366" viewBox="0 0 24 24">
+<path d="M20.52 3.48A11.83 11.83 0 0 0 12.06 0C5.48 0 .12 5.36.12 11.94c0 2.1.55 4.15 1.6 5.97L0 24l6.25-1.63a11.86 11.86 0 0 0 5.8 1.48h.01c6.58 0 11.94-5.36 11.94-11.94 0-3.19-1.24-6.19-3.48-8.43z"/>
+</svg>
+&nbsp; Support
+</a>
+
+</div>
+
+<header>⚽ ELITE AI FOOTBALL PREDICTIONS ⚽</header>
+
+<nav>
+<button onclick="showSection('premium')">PREMIUM</button>
+<button onclick="showSection('correct')">CORRECT SCORE</button>
+<button onclick="showSection('overunder')">OVER & UNDER</button>
+<button onclick="showSection('live')">LIVE FIXTURES</button>
+<button onclick="showSection('stats')">STATISTICS</button>
+<button onclick="toggleTheme()">Toggle Theme</button>
+</nav>
+
+<div class="container">
+
+<!-- PREMIUM SECTION -->
+<div id="premium" class="section">
+<h2>🔥 PREMIUM CORRECT SCORE FIXTURES 🔥</h2>
+
+<div id="premiumContent" class="locked">
+🔒 PREMIUM ACCESS REQUIRED  
+<br><br>
+These fixtures are strictly for paid members only.
+<br><br>
+<button onclick="unlockPremiumAccess()">Pay to Unlock</button>
+<br><br>
+<a href="#">Pay with M-Pesa</a> |
+<a href="#">Pay with PayPal</a>
+</div>
+</div>
+
+<!-- CORRECT SCORE -->
+<div id="correct" class="section active">
+<h2>Correct Score (Past Games)</h2>
+<div id="correctList"></div>
+
+<h3>🔥 Premium</h3>
+<div id="premiumCorrect" class="locked">
+🔒 Unlock Premium via Payment
+<br><br>
+<button onclick="unlockPremium()">Simulate Payment Unlock</button>
+<br><br>
+<a href="#">Pay with M-Pesa</a> |
+<a href="#">Pay with PayPal</a>
+</div>
+
+<br>
+<button onclick="generateAI()">🤖 Generate AI Prediction</button>
+<div id="aiPrediction"></div>
+</div>
+
+<!-- OVER UNDER -->
+<div id="overunder" class="section">
+<h2>Over & Under (Past Games)</h2>
+<div id="ouList"></div>
+</div>
+
+<!-- LIVE FIXTURES -->
+<div id="live" class="section">
+<h2>Live Fixtures (API Ready)</h2>
+<div id="liveFixtures"></div>
+<button onclick="loadLiveFixtures()">Load Live Fixtures</button>
+</div>
+
+<!-- STATS -->
+<div id="stats" class="section">
+<h2>Performance Dashboard</h2>
+<div class="dashboard">
+Total Predictions: <span id="totalPred">0</span><br>
+Total Won: <span id="totalWon">0</span><br>
+Win Rate: <span id="winRate">0%</span>
+</div>
+</div>
+
+</div>
+
+<script>
+let totalPred = 0;
+let totalWon = 0;
+let premiumUnlocked = false;
+
+const correctGames = [
+"Bournemouth vs Sunderland — 1–1",
+"Liverpool vs West Ham United — 5–2",
+"Newcastle United vs Everton — 2–3",
+"Burnley vs Brentford — 3–4",
+"Leeds United vs Manchester City — 0–1",
+"Barcelona vs Villarreal — 4–1",
+"Como vs Lecce — 3–1",
+"Verona vs Napoli — 1–2",
+"Inter Milan vs Genoa — 2–0",
+"Parma vs Cagliari — 1–1"
+];
+
+const ouGames = [
+"Arsenal vs Chelsea — Over 2.5",
+"Barcelona vs Sevilla — Over 3.5",
+"Man City vs Liverpool — Over 2.5",
+"PSG vs Lyon — Over 2.5",
+"Bayern vs Dortmund — Over 1.5",
+"Inter vs Milan — Under 2.5",
+"Napoli vs Roma — Over 2.5",
+"Madrid vs Valencia — Over 2.5",
+"Ajax vs PSV — Over 2.5",
+"Porto vs Benfica — Under 3.5"
+];
+
+function toggleMenu(){
+document.getElementById("sideMenu").classList.toggle("active");
+}
+
+function loadGames(){
+correctGames.forEach(g=>{ addMatch("correctList", g); });
+ouGames.forEach(g=>{ addMatch("ouList", g); });
+updateStats();
+}
+
+function addMatch(container, text){
+let div=document.createElement("div");
+div.className="match";
+div.innerHTML="<span>"+text+"</span><span class='won'>✅ WON</span>";
+document.getElementById(container).appendChild(div);
+totalPred++;
+totalWon++;
+}
+
+function updateStats(){
+document.getElementById("totalPred").innerText=totalPred;
+document.getElementById("totalWon").innerText=totalWon;
+document.getElementById("winRate").innerText=
+Math.round((totalWon/totalPred)*100)+"%";
+}
+
+function showSection(id){
+document.querySelectorAll(".section")
+.forEach(sec=>sec.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+}
+
+function toggleTheme(){
+document.body.classList.toggle("light");
+}
+
+function unlockPremiumAccess(){
+premiumUnlocked = true;
+document.getElementById("premiumContent").innerHTML =
+"<div class='match'><span>Real Madrid vs Barcelona — 2-1</span><span>🔥 PREMIUM</span></div>" +
+"<div class='match'><span>Man City vs Arsenal — 3-1</span><span>🔥 PREMIUM</span></div>";
+}
+
+function unlockPremium(){
+document.getElementById("premiumCorrect").innerHTML=
+"<div class='match'><span>Real Madrid vs Barca — 2-1</span><span>🔥 PREMIUM</span></div>";
+}
+
+function generateAI(){
+const teams=["Juventus","Atletico","Tottenham","Leverkusen","Lazio"];
+let home=teams[Math.floor(Math.random()*teams.length)];
+let away=teams[Math.floor(Math.random()*teams.length)];
+let score=Math.floor(Math.random()*4)+"-"+Math.floor(Math.random()*3);
+document.getElementById("aiPrediction").innerHTML=
+"<div class='match'><span>"+home+" vs "+away+" — "+score+"</span><span>🤖 AI</span></div>";
+}
+
+function loadLiveFixtures(){
+document.getElementById("liveFixtures").innerHTML=
+"<div class='match'><span>Loading fixtures from API...</span></div>";
+
+setTimeout(()=>{
+document.getElementById("liveFixtures").innerHTML=
+"<div class='match'><span>Man United vs Arsenal — Today 20:00</span></div>"+
+"<div class='match'><span>Barcelona vs PSG — Today 22:00</span></div>";
+},1500);
+}
+
+loadGames();
+</script>
+
+</body>
+</html>
